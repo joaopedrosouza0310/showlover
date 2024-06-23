@@ -8,7 +8,7 @@ part of 'external_model.dart';
 
 ExternalsModel _$ExternalsModelFromJson(Map<String, dynamic> json) =>
     ExternalsModel(
-      tvrage: (json['tvrage'] as num).toInt(),
+      tvrage: (json['tvrage'] as num?)?.toInt(),
       thetvdb: (json['thetvdb'] as num?)?.toInt(),
       imdb: json['imdb'] as String?,
     );

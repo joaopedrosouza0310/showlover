@@ -14,7 +14,7 @@ class SeasonModel {
   final int? episodeOrder;
   final String premiereDate;
   final String endDate;
-  final NetworkModel network;
+  final NetworkModel? network;
   final dynamic webChannel;
   final ImageModel? image;
   final String? summary;

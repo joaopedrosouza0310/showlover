@@ -10,15 +10,15 @@ String? handleRemoteErrorMessage(RequestErrorResult? result) {
 
   switch (result) {
     case RequestErrorResult.unableToRetrieveData:
-      return 'Não foi possível recuperar os dados';
+      return 'Unable to retrieve data';
     case RequestErrorResult.httpError:
-      return 'Erro de requisição HTTP';
+      return 'HTTP request error';
     case RequestErrorResult.jsonFormatError:
-      return 'Erro de formato JSON';
+      return 'JSON format error';
     case RequestErrorResult.networkError:
-      return 'Erro de rede';
+      return 'Network error';
     case RequestErrorResult.typeError:
-      return 'Erro de tipo';
+      return 'Type error';
   }
 }
 

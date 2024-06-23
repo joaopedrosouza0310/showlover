@@ -14,7 +14,9 @@ SeasonModel _$SeasonModelFromJson(Map<String, dynamic> json) => SeasonModel(
       episodeOrder: (json['episodeOrder'] as num?)?.toInt(),
       premiereDate: json['premiereDate'] as String,
       endDate: json['endDate'] as String,
-      network: NetworkModel.fromJson(json['network'] as Map<String, dynamic>),
+      network: json['network'] == null
+          ? null
+          : NetworkModel.fromJson(json['network'] as Map<String, dynamic>),
       webChannel: json['webChannel'],
       image: json['image'] == null
           ? null

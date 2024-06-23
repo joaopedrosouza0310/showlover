@@ -132,7 +132,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                 MaterialSpacing.heightMin(),
 
                 // Seasons and episodes
-                  Seasons(seasonsCubit)
+                Seasons(seasonsCubit)
               ],
             ),
           ],

@@ -18,6 +18,10 @@ class Seasons extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoading) return const LoadingSeasons();
 
+        if (state.errorMessage != null) {
+          return ErrorData(state.errorMessage!);
+        }
+
         return Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.transparent,

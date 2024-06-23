@@ -7,11 +7,18 @@ import '../../../../core/core.dart';
 
 abstract interface class ShowsDataSource {
   Future<GetShowsResult> getShows(int page);
+  Future<GetShowsByNameResult> getShowsByName(String showName);
 }
 
 typedef GetShowsResult = ({
   RequestErrorResult? errorType,
   List<ShowModel>? shows,
+});
+
+typedef GetShowsByNameResult = ({
+  RequestErrorResult? errorType,
+  List<ShowModel>? shows,
+  ShowModel? show,
 });
 
 @Injectable(as: ShowsDataSource)
@@ -35,6 +42,37 @@ class ShowsDataSourceImpl implements ShowsDataSource {
       },
       onSuccess: (shows) => (shows: shows, errorType: null),
       onError: (error) => (shows: null, errorType: error),
+      logger: _logger,
+    );
+  }
+
+  @override
+  Future<GetShowsByNameResult> getShowsByName(String showName) async {
+    return errorsWrapper<({List<ShowModel>? shows, ShowModel? show}),
+        GetShowsByNameResult>(
+      request: () async {
+        final response = await _httpClient.get(Endpoints.showByName(showName));
+        if (response.statusCode == HttpStatus.ok) {
+          final jsonData = response.data;
+
+          if (jsonData is List) {
+            final data =
+                jsonData.map((json) => ShowModel.fromJson(json)).toList();
+            return (shows: data, show: null);
+          } else {
+            final data = ShowModel.fromJson(jsonData);
+            return (shows: null, show: data);
+          }
+        }
+
+        throw RequestErrorResult.unableToRetrieveData;
+      },
+      onSuccess: (showsResult) {
+        final (:show, :shows) = showsResult;
+
+        return (shows: shows, show: show, errorType: null);
+      },
+      onError: (error) => (shows: null, show: null, errorType: error),
       logger: _logger,
     );
   }

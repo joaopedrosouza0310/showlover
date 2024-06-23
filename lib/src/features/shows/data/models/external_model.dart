@@ -4,7 +4,7 @@ part 'external_model.g.dart';
 
 @JsonSerializable()
 class ExternalsModel {
-  final int tvrage;
+  final int? tvrage;
   final int? thetvdb;
   final String? imdb;
 

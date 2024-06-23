@@ -9,7 +9,12 @@ class ShowsRespositoryImpl implements ShowsRepository {
   ShowsRespositoryImpl(this._showsDataSource);
 
   @override
-  Future<GetShowsResult> getShows(int page) async {
-    return await _showsDataSource.getShows(page);
+  Future<GetShowsResult> getShows(int page) {
+    return _showsDataSource.getShows(page);
+  }
+
+  @override
+  Future<GetShowsByNameResult> getShowsByName(String showName) {
+    return _showsDataSource.getShowsByName(showName);
   }
 }

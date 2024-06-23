@@ -16,11 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ShowsState {
-  bool get isLoadingMore => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   List<ShowModel> get shows => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  bool get hasInternet => throw _privateConstructorUsedError;
   int get page => throw _privateConstructorUsedError;
+  String? get showName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ShowsStateCopyWith<ShowsState> get copyWith =>
@@ -34,11 +34,11 @@ abstract class $ShowsStateCopyWith<$Res> {
       _$ShowsStateCopyWithImpl<$Res, ShowsState>;
   @useResult
   $Res call(
-      {bool isLoadingMore,
+      {bool isLoading,
       List<ShowModel> shows,
       String? errorMessage,
-      bool hasInternet,
-      int page});
+      int page,
+      String? showName});
 }
 
 /// @nodoc
@@ -54,16 +54,16 @@ class _$ShowsStateCopyWithImpl<$Res, $Val extends ShowsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoadingMore = null,
+    Object? isLoading = null,
     Object? shows = null,
     Object? errorMessage = freezed,
-    Object? hasInternet = null,
     Object? page = null,
+    Object? showName = freezed,
   }) {
     return _then(_value.copyWith(
-      isLoadingMore: null == isLoadingMore
-          ? _value.isLoadingMore
-          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       shows: null == shows
           ? _value.shows
@@ -73,14 +73,14 @@ class _$ShowsStateCopyWithImpl<$Res, $Val extends ShowsState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      hasInternet: null == hasInternet
-          ? _value.hasInternet
-          : hasInternet // ignore: cast_nullable_to_non_nullable
-              as bool,
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
+      showName: freezed == showName
+          ? _value.showName
+          : showName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -94,11 +94,11 @@ abstract class _$$ShowsStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool isLoadingMore,
+      {bool isLoading,
       List<ShowModel> shows,
       String? errorMessage,
-      bool hasInternet,
-      int page});
+      int page,
+      String? showName});
 }
 
 /// @nodoc
@@ -112,16 +112,16 @@ class __$$ShowsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoadingMore = null,
+    Object? isLoading = null,
     Object? shows = null,
     Object? errorMessage = freezed,
-    Object? hasInternet = null,
     Object? page = null,
+    Object? showName = freezed,
   }) {
     return _then(_$ShowsStateImpl(
-      isLoadingMore: null == isLoadingMore
-          ? _value.isLoadingMore
-          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       shows: null == shows
           ? _value.shows
@@ -131,14 +131,14 @@ class __$$ShowsStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      hasInternet: null == hasInternet
-          ? _value.hasInternet
-          : hasInternet // ignore: cast_nullable_to_non_nullable
-              as bool,
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
+      showName: freezed == showName
+          ? _value.showName
+          : showName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -147,27 +147,27 @@ class __$$ShowsStateImplCopyWithImpl<$Res>
 
 class _$ShowsStateImpl extends _ShowsState {
   const _$ShowsStateImpl(
-      {required this.isLoadingMore,
+      {required this.isLoading,
       required this.shows,
       required this.errorMessage,
-      required this.hasInternet,
-      required this.page})
+      required this.page,
+      required this.showName})
       : super._();
 
   @override
-  final bool isLoadingMore;
+  final bool isLoading;
   @override
   final List<ShowModel> shows;
   @override
   final String? errorMessage;
   @override
-  final bool hasInternet;
-  @override
   final int page;
+  @override
+  final String? showName;
 
   @override
   String toString() {
-    return 'ShowsState(isLoadingMore: $isLoadingMore, shows: $shows, errorMessage: $errorMessage, hasInternet: $hasInternet, page: $page)';
+    return 'ShowsState(isLoading: $isLoading, shows: $shows, errorMessage: $errorMessage, page: $page, showName: $showName)';
   }
 
   @override
@@ -175,24 +175,19 @@ class _$ShowsStateImpl extends _ShowsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShowsStateImpl &&
-            (identical(other.isLoadingMore, isLoadingMore) ||
-                other.isLoadingMore == isLoadingMore) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(other.shows, shows) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.hasInternet, hasInternet) ||
-                other.hasInternet == hasInternet) &&
-            (identical(other.page, page) || other.page == page));
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.showName, showName) ||
+                other.showName == showName));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoadingMore,
-      const DeepCollectionEquality().hash(shows),
-      errorMessage,
-      hasInternet,
-      page);
+  int get hashCode => Object.hash(runtimeType, isLoading,
+      const DeepCollectionEquality().hash(shows), errorMessage, page, showName);
 
   @JsonKey(ignore: true)
   @override
@@ -203,23 +198,23 @@ class _$ShowsStateImpl extends _ShowsState {
 
 abstract class _ShowsState extends ShowsState {
   const factory _ShowsState(
-      {required final bool isLoadingMore,
+      {required final bool isLoading,
       required final List<ShowModel> shows,
       required final String? errorMessage,
-      required final bool hasInternet,
-      required final int page}) = _$ShowsStateImpl;
+      required final int page,
+      required final String? showName}) = _$ShowsStateImpl;
   const _ShowsState._() : super._();
 
   @override
-  bool get isLoadingMore;
+  bool get isLoading;
   @override
   List<ShowModel> get shows;
   @override
   String? get errorMessage;
   @override
-  bool get hasInternet;
-  @override
   int get page;
+  @override
+  String? get showName;
   @override
   @JsonKey(ignore: true)
   _$$ShowsStateImplCopyWith<_$ShowsStateImpl> get copyWith =>

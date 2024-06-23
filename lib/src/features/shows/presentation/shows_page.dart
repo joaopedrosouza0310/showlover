@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +14,7 @@ class ShowsPage extends StatefulWidget {
 
 class _ShowsPageState extends State<ShowsPage> {
   late final ShowsCubit showsCubit;
-  final _debouncer = Debouncer(delay: const Duration(seconds: 1));
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 600));
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _ShowsPageState extends State<ShowsPage> {
               // Listing
               Expanded(
                 child: Builder(builder: (context) {
-                  if (state.isLoadingMore && state.shows.isEmpty) {
+                  if (state.isLoading && state.shows.isEmpty) {
                     return const LoadingList();
                   }
 
@@ -47,32 +48,53 @@ class _ShowsPageState extends State<ShowsPage> {
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Seach for shows',
-                            border: OutlineInputBorder(),
+                          initialValue: state.showName ?? '',
+                          decoration: InputDecoration(
+                            suffixIcon: state.showName != null
+                                ? IconButton(
+                                    onPressed: () {
+                                      showsCubit.loadMore( );
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                    ),
+                                  )
+                                : null,
+                            hintText: 'Seach for shows...',
+                            border: const OutlineInputBorder(),
                           ),
-                          onChanged: (value) => _debouncer.call(() {
-                            showsCubit.loadMore(value);
-                          }),
+                          onChanged: (value) {
+                            if (value.isEmpty) return;
+
+                            _debouncer.call(() {
+                              showsCubit.loadMore(value);
+                            });
+                          },
                         ),
                       ),
 
                       // Listing
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: state.shows.length,
-                          itemBuilder: (context, index) {
-                            final isLast =
-                                (index + 1) == ((state.page + 1) * 250);
-                            if (isLast && !state.isLoadingMore) {
-                              showsCubit.loadMore();
-                            }
+                        child: Builder(builder: (context) {
+                          if (state.errorMessage != null) {
+                            return ErrorData(state.errorMessage!);
+                          }
 
-                            final show = state.shows[index];
+                          return ListView.builder(
+                            itemCount: state.shows.length,
+                            itemBuilder: (context, index) {
+                              final isLast =
+                                  (index + 1) == ((state.page + 1) * 250);
+                              if (isLast && !state.isLoading) {
+                                showsCubit.loadMore();
+                              }
 
-                            return ShowTile(show);
-                          },
-                        ),
+                              final show = state.shows[index];
+
+                              return ShowTile(show);
+                            },
+                          );
+                        }),
                       ),
                     ],
                   );
@@ -80,7 +102,7 @@ class _ShowsPageState extends State<ShowsPage> {
               ),
 
               // Loading
-              if (state.isLoadingMore && state.shows.isNotEmpty)
+              if (state.isLoading && state.shows.isNotEmpty)
                 const LoadingMore(),
             ],
           ),

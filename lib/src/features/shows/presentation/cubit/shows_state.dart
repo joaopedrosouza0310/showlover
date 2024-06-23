@@ -9,18 +9,18 @@ class ShowsState with _$ShowsState {
   const ShowsState._();
 
   const factory ShowsState({
-    required bool isLoadingMore,
+    required bool isLoading,
     required List<ShowModel> shows,
     required String? errorMessage,
-    required bool hasInternet,
     required int page,
+    required String? showName,
   }) = _ShowsState;
 
   factory ShowsState.initial() => const ShowsState(
         shows: [],
-        isLoadingMore: true,
+        isLoading: true,
         errorMessage: null,
-        hasInternet: false,
         page: -1,
+        showName: null,
       );
 }

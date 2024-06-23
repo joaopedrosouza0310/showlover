@@ -8,30 +8,42 @@ import '../../shows.dart';
 class ShowsCubit extends Cubit<ShowsState> {
   ShowsCubit() : super(ShowsState.initial());
 
-  Future<void> loadMore([String? title]) async {
+  Future<void> loadMore([String? showName]) async {
+    late final ({RequestErrorResult? errorType, List<ShowModel>? shows}) result;
 
-    if(title != null){
+    if (showName != null) {
       emit(state.copyWith(
         page: -1,
         shows: [],
+        showName: showName,
+        isLoading: true,
       ));
+
+      final (:show, :shows, :errorType) =
+          await getIt<GetShowsByName>().call(state.showName!);
+
+      final receivedShows = [if (show != null) show, ...?shows];
+
+      result = (shows: receivedShows, errorType: errorType);
+    } else {
+      final hasEarlySearch = state.showName != null;
+
+      emit(
+        state.copyWith(
+          isLoading: true,
+          page: state.page + 1,
+          showName: null,
+          shows: hasEarlySearch ? [] : state.shows,
+        ),
+      );
+
+      result = await getIt<GetShows>().call(state.page);
     }
 
-
-
-    emit(
-      state.copyWith(
-        isLoadingMore: true,
-        page: state.page + 1,
-      ),
-    );
-
-    final (:errorType, :shows) = await getIt<GetShows>().call(state.page);
-
     emit(state.copyWith(
-      isLoadingMore: false,
-      shows: List<ShowModel>.from(state.shows)..addAll(shows ?? []),
-      errorMessage: handleRemoteErrorMessage(errorType),
+      isLoading: false,
+      shows: List<ShowModel>.from(state.shows)..addAll(result.shows ?? []),
+      errorMessage: handleRemoteErrorMessage(result.errorType),
     ));
   }
 }
